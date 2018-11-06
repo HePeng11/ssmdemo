@@ -1,8 +1,5 @@
 package com.jxcdemo.controllers;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,13 +17,6 @@ import com.jxcdemo.entitys.User;
 public class UserController {
 	@Autowired
 	IUserBusiness iUserBusiness;
-
-	@RequestMapping("/index")
-	@ResponseBody
-	public String index() {
-		System.out.println("接收到请求 ，index");
-		return "index";
-	}
 
 	@RequestMapping(value = "/hello.do")
 	@ResponseBody
@@ -47,7 +37,7 @@ public class UserController {
 				System.out.println("登陆成功");
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
-				response.sendRedirect("index.jsp");
+				return "redirect:/views/index.jsp";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,7 +45,6 @@ public class UserController {
 			System.out.println("登录失败");
 			return "forward:/index";
 		}
-		return null;
 	}
 
 }

@@ -19,9 +19,8 @@
 		base-package="com.jxcdemo.controllers"></context:component-scan>
 
 	<!-- 视图解析器 -->
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/views/" />
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/views/syssettings/" />
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 
@@ -33,5 +32,6 @@
 	<mvc:resources location="/resources/js/" mapping="/js/**" />
 	<mvc:resources location="/resources/css/" mapping="/css/**" />
 	<mvc:resources location="/resources/images/" mapping="/images/**" />
+	<mvc:resources location="/resources/fonts/" mapping="/fonts/**" />
 
 </beans>

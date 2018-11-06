@@ -6,7 +6,7 @@
 	version="3.0">
 	<display-name>ssm integration</display-name>
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>/views/index.jsp</welcome-file>
 	</welcome-file-list>
 
 	<!--配置过滤器 -->
@@ -26,11 +26,11 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:spring-context.xml</param-value>
 	</context-param>
-	
-	<servlet-mapping>
+
+<!-- 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
 		<url-pattern>/resources/images/*</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 
 	<!-- 定义前端控制器 -->
 	<servlet>
@@ -56,6 +56,9 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-
+	<error-page>
+		<error-code>404</error-code>
+		<location>/views/404.jsp</location>
+	</error-page>
 
 </web-app>
