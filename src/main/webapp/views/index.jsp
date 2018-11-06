@@ -775,7 +775,7 @@ html {
 				id : '10008',
 				title : '欢迎页',
 				close : false,
-				url : 'welcome_iframe.html',
+				url : 'login1.jsp',
 				urlType : "relative"
 			});
 
@@ -803,235 +803,20 @@ html {
 			 </ul>
 			 </li>
 			 */
-			var menus = [
-			/* {
-			    id: "9000",
-			    text: "header",
-			    icon: "",
-			    isHeader: true
-			}, */
-			{
-				id : "9001",
-				text : "UI Elements",
-				icon : "fa fa-laptop",
-				children : [ {
-					id : "90011",
-					text : "buttons",
-					icon : "fa fa-circle-o",
-					url : "UI/buttons_iframe.html",
-					targetType : "iframe-tab",
-					children : [{
-						id : "9001212",
-						text : "icons",
-						url : "UI/icons_iframe.html",
-						targetType : "iframe-tab",
-						icon : "fa fa-circle-o"
-					}]
-				}, {
-					id : "90012",
-					text : "icons",
-					url : "UI/icons_iframe.html",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o"
-				}, {
-					id : "90013",
-					text : "general",
-					url : "UI/general_iframe.html",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o"
-				}, {
-					id : "90014",
-					text : "modals",
-					url : "UI/modals_iframe.html",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o"
-				}, {
-					id : "90015",
-					text : "sliders",
-					url : "UI/sliders_iframe.html",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o"
-				}, {
-					id : "90016",
-					text : "timeline",
-					url : "UI/timeline_iframe.html",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o"
-				} ]
-			}, {
-				id : "9002",
-				text : "Forms",
-				icon : "fa fa-edit",
-				children : [ {
-					id : "90021",
-					text : "advanced",
-					url : "forms/advanced_iframe.html",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o"
-				}, {
-					id : "90022",
-					text : "general",
-					url : "forms/general_iframe.html",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o"
-				}, {
-					id : "90023",
-					text : "editors",
-					url : "forms/editors_iframe.html",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o"
-				}, {
-					id : "90025",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90026",
-					text : "百度1",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90027",
-					text : "百度2",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90028",
-					text : "百度3",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90029",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90030",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90031",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90032",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90033",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90034",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90035",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90036",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90037",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90038",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90039",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90040",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90041",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90042",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90043",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90044",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				}, {
-					id : "90045",
-					text : "百度",
-					url : "https://www.baidu.com",
-					targetType : "iframe-tab",
-					icon : "fa fa-circle-o",
-					urlType : 'abosulte'
-				} ]
-			} ];
-			$('.sidebar-menu').sidebarMenu({
-				data : menus
-			});
+			 $.ajax({
+	             type: "GET",
+	             url: "<%=request.getContextPath()%>/sysmenu/GetMenus",
+	             data: {},
+	             dataType: "json",
+	             success: function(data){
+	            	 for (var i = 0; i < data.length; i++) {
+						data[i].targetType= "iframe-tab";
+					}
+	            	 $('.sidebar-menu').sidebarMenu({ data : data });
+	              }
+	         });
+			 
+			 
 
 			// 动态创建菜单后，可以重新计算 SlimScroll
 			// $.AdminLTE.layout.fixSidebar();
