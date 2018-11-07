@@ -7,7 +7,7 @@ public class Sysmenu {
 	private String text;
 	private String icon;
 	private String url;
-	private String parentId;
+	private int parentId;
 	
 	@Override
 	public String toString() {
@@ -40,10 +40,10 @@ public class Sysmenu {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public String getParentId() {
+	public int getParentId() {
 		return parentId;
 	}
-	public void setParentId(String parentId) {
+	public void setParentId(int parentId) {
 		this.parentId = parentId;
 	}
 	

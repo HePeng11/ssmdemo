@@ -1,10 +1,14 @@
 package com.jxcdemo.businessimpl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jxc.dto.SysmenuDto;
 import com.jxcdemo.business.ISysmenuBusiness;
 import com.jxcdemo.dao.SysmenuDao;
 import com.jxcdemo.entitys.Sysmenu;
@@ -15,9 +19,41 @@ public class SysmenuBusiness implements ISysmenuBusiness {
 	SysmenuDao mDao;
 
 	@Override
-	public List<Sysmenu> GetMenus() {
+	public List<SysmenuDto> GetMenus() {
 		List<Sysmenu> list = mDao.GetMenus();
-		return list;
+		List<SysmenuDto> result = new ArrayList<SysmenuDto>();
+		list.forEach(f -> {
+			if (f.getParentId() == 0) {
+				result.add(new SysmenuDto(f.getId(), f.getText(), f.getIcon(), f.getUrl()));
+			}
+		});
+		convert(list, result);
+
+		return result;
+	}
+
+	/**
+	 * 转换dto
+	 * 
+	 * @param list
+	 * @param result
+	 */
+	private void convert(List<Sysmenu> list, List<SysmenuDto> result) {
+		for (SysmenuDto menuDto : result) {
+			List<Sysmenu> children = list.stream().filter(f -> f.getParentId() == menuDto.getId())
+					.collect(Collectors.toList());
+			if (children.size() > 0) {
+				for (Sysmenu item : children) {
+					if (menuDto.getChildren() == null) {
+						menuDto.setChildren(new ArrayList<SysmenuDto>());
+					}
+					menuDto.getChildren().add(new SysmenuDto(item.getId(), item.getText(), item.getIcon(), item.getUrl()));
+					//list.remove(item);
+				}
+				convert(list, menuDto.getChildren());
+			}
+		}
+
 	}
 
 }

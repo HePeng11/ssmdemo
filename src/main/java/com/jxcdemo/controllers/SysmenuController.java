@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jxc.dto.SysmenuDto;
 import com.jxcdemo.business.ISysmenuBusiness;
-import com.jxcdemo.entitys.Sysmenu;
 
 @Controller
 @RequestMapping("sysmenu")
@@ -20,7 +20,8 @@ public class SysmenuController {
 
 	@GetMapping(value = "/GetMenus")
 	@ResponseBody
-	public List<Sysmenu> GetMenus() {
-		return imenuBll.GetMenus();
+	public List<SysmenuDto> GetMenus() {
+		List<SysmenuDto> list = imenuBll.GetMenus();
+		return list;
 	}
 }
