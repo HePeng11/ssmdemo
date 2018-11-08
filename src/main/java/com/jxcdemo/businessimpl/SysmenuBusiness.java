@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +32,7 @@ public class SysmenuBusiness implements ISysmenuBusiness {
 	}
 
 	/**
-	 * 转换dto
+	 * 转换dto  以后存redis
 	 * 
 	 * @param list
 	 * @param result

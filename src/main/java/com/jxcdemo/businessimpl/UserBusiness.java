@@ -1,12 +1,15 @@
 package com.jxcdemo.businessimpl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jxc.dto.UserDto;
 import com.jxcdemo.business.IUserBusiness;
 import com.jxcdemo.dao.UserDao;
 import com.jxcdemo.entitys.User;
@@ -42,11 +45,20 @@ public class UserBusiness implements IUserBusiness {
 		return null;
 	}
 
-	@Transactional("transactionManager")
-	public Void UpdateUserByName(String name) {
-		mDao.UpdateUserByName("21312");
-		mDao.UpdateUserByName1("21312");
-		return null;
+	
+	@Override
+	public List<UserDto> getusers(UserDto userDto) {
+		List<User> list=mDao.getusers(userDto);
+		List<UserDto> result=new ArrayList<UserDto>();
+//		for (User user : list) {
+//			result.add(new UserDto() { });
+//		}
+		
+		return result;
 	}
+
+	
+
+	
 
 }

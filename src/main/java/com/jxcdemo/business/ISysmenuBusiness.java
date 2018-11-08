@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.jxc.dto.SysmenuDto;
-import com.jxcdemo.entitys.Sysmenu;
 
 @Service
 public interface ISysmenuBusiness {

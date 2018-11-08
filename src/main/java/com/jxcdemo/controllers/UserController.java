@@ -1,5 +1,7 @@
 package com.jxcdemo.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jxc.dto.UserDto;
 import com.jxcdemo.business.IUserBusiness;
 import com.jxcdemo.entitys.User;
 
@@ -17,12 +20,11 @@ public class UserController {
 	@Autowired
 	IUserBusiness iUserBusiness;
 
-	@RequestMapping(value = "/hello.do")
+	@RequestMapping(value = "/users")
 	@ResponseBody
-	public String hello() {
-		System.out.println("接收到请求 ，Hello");
-		iUserBusiness.UpdateUserByName("hi");
-		return "hi";
+	public List<UserDto> getusers() {
+		
+		return null;
 	}
 
 	@RequestMapping(value = "/login")
@@ -36,7 +38,7 @@ public class UserController {
 				System.out.println("登陆成功");
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
-				return "redirect:/views/index.jsp";
+				return "redirect:/views/index.html";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

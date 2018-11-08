@@ -4,12 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxcdemo.dao.UserDao">
     <select id="selectUserByName" resultType="com.jxcdemo.entitys.User" parameterType="string">
-        select * from Users where name = #{name}
+        select d,loginName,realName,phone,sex from Users 
+        where loginName = #{name} and `password`=#{password}
     </select>
-    <select id="UpdateUserByName"  parameterType="string">
-        update Users set `password`='123'
-    </select>
-    <select id="UpdateUserByName1"  parameterType="string">
-        update Users set `password`='456'
+    <select id="getusers" resultType="com.jxcdemo.entitys.User"  parameterType="com.jxc.dto.UserDto">
+        select id,loginName,realName,phone,sex from users 
+        where loginName like '%#{userDto.name}%'
     </select>
 </mapper>
