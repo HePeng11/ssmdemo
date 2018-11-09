@@ -8,8 +8,8 @@
 </head>
 <body>
 	<form action="<%=request.getContextPath()%>/login" method="post">
-		用户名：<input name="name" /> <br/>
-		密码：<input name="password" /><br/>
+		用户名：<input name="name" value="admin" /> <br/>
+		密码：<input name="password" value="123456" /><br/>
 		<input type="submit" value="提交" />
 	</form>
 

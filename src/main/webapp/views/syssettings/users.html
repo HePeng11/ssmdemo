@@ -34,9 +34,10 @@ layui.use('table', function(){
   
   table.render({
     elem: '#test'
-    ,url:'demo1.json'
+    ,url:'../../../users'
     ,toolbar: '#toolbarDemo'
     ,title: '用户数据表'
+    ,data:{}
     ,cols: [[
       {type: 'checkbox', fixed: 'left'}
       ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}

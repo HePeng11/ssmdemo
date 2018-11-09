@@ -3,12 +3,25 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jxcdemo.dao.UserDao">
-    <select id="selectUserByName" resultType="com.jxcdemo.entitys.User" parameterType="string">
-        select d,loginName,realName,phone,sex from Users 
-        where loginName = #{name} and `password`=#{password}
-    </select>
-    <select id="getusers" resultType="com.jxcdemo.entitys.User"  parameterType="com.jxc.dto.UserDto">
-        select id,loginName,realName,phone,sex from users 
-        where loginName like '%#{userDto.name}%'
-    </select>
+
+	<resultMap type="com.jxcdemo.entitys.User" id="userMap">
+		<id property="id" column="id" />
+		<result property="userid" column="id" />
+		<result property="sex" column="sex" javaType="com.jxcdemo.enums.UserSex" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,loginName,realName,phone,sex
+	</sql>
+	<select id="login" resultType="com.jxcdemo.entitys.User" resultMap="userMap" parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from Users
+		where loginName = #{} and `password`=#{password}
+	</select>
+	<select id="getusers" resultType="com.jxcdemo.entitys.User" >
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where loginName like '%'#{loginname,jdbcType=VARCHAR}'%'
+	</select>
 </mapper>

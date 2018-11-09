@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jxc.dto.UserDto;
 import com.jxcdemo.business.IUserBusiness;
+import com.jxcdemo.common.QueryResult;
 import com.jxcdemo.dao.UserDao;
 import com.jxcdemo.entitys.User;
 
@@ -36,7 +37,7 @@ public class UserBusiness implements IUserBusiness {
 			return null;
 		}
 		try {
-			User user = mDao.selectUserByName(name);
+			User user = mDao.login(name,passsword);
 			return user;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -45,20 +46,19 @@ public class UserBusiness implements IUserBusiness {
 		return null;
 	}
 
-	
 	@Override
-	public List<UserDto> getusers(UserDto userDto) {
-		List<User> list=mDao.getusers(userDto);
-		List<UserDto> result=new ArrayList<UserDto>();
-//		for (User user : list) {
-//			result.add(new UserDto() { });
-//		}
+	public QueryResult<UserDto> getusers(UserDto userDto) {
+		List<User> list = mDao.getusers(userDto);
+		List<UserDto> result = new ArrayList<UserDto>();
+		for (User user : list) {
+			result.add(new UserDto(user.getId(), user.getLoginname(), user.getRealname(), user.getPhone(), user.getSex()));
+		}
+
+		QueryResult<UserDto> r=new QueryResult<UserDto>();
+		r.setCount(100);
+		r.setData(result);
 		
-		return result;
+		return r;
 	}
-
-	
-
-	
 
 }

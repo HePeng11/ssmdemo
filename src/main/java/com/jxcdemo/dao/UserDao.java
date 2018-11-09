@@ -8,8 +8,13 @@ import com.jxc.dto.UserDto;
 import com.jxcdemo.entitys.User;
 
 public interface UserDao {
-	
-	User selectUserByName(@Param("name") String name);
+	/**
+	 * 必须加@Param？
+	 * @param name
+	 * @param password
+	 * @return
+	 */
+	User login(@Param("name")String name,@Param("password")String password);
 	
 	List<User> getusers(UserDto userDto);
 

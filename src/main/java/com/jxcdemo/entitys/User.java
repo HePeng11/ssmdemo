@@ -4,11 +4,13 @@ import com.jxcdemo.enums.UserSex;
 
 public class User {
 	private int id;
+	private int userid;
+	private int userpassword;
 	private String loginname;
 	private String password;
 	private String realname;
 	private String phone;
-	private String sex;
+	private UserSex sex;
 	public int getId() {
 		return id;
 	}
@@ -39,16 +41,11 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getSex() {
+	public UserSex getSex() {
 		return sex;
 	}
-	public void setSex(String sex) {
+	public void setSex(UserSex sex) {
 		this.sex = sex;
 	}
-	
-public static void main(String[] args) {
-	System.out.println(UserSex.男.ordinal());
-}
-	
 	
 }

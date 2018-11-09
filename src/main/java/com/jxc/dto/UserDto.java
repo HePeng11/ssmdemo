@@ -1,13 +1,15 @@
 package com.jxc.dto;
 
+import com.jxcdemo.enums.UserSex;
+
 public class UserDto {
 	private int id;
 	private String loginname;
 	private String realname;
 	private String phone;
-	private String sex;
+	private UserSex sex;
 	
-	public UserDto(int id, String loginname, String realname, String phone, String sex) {
+	public UserDto(int id, String loginname, String realname, String phone, UserSex sex) {
 		super();
 		this.id = id;
 		this.loginname = loginname;
@@ -39,10 +41,10 @@ public class UserDto {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getSex() {
+	public UserSex getSex() {
 		return sex;
 	}
-	public void setSex(String sex) {
+	public void setSex(UserSex sex) {
 		this.sex = sex;
 	}
 }
