@@ -9,7 +9,7 @@ import com.jxcdemo.entitys.User;
 
 public interface UserDao {
 	/**
-	 * 必须加@Param？
+	 * 
 	 * @param name
 	 * @param password
 	 * @return
@@ -17,5 +17,7 @@ public interface UserDao {
 	User login(@Param("name")String name,@Param("password")String password);
 	
 	List<User> getusers(UserDto userDto);
+	
+	Integer adduser(User user);
 
 }

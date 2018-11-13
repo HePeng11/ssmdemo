@@ -4,16 +4,16 @@ import com.jxcdemo.enums.UserSex;
 
 public class UserDto {
 	private int id;
-	private String loginname;
-	private String realname;
+	private String loginName;
+	private String realName;
 	private String phone;
 	private UserSex sex;
 	
 	public UserDto(int id, String loginname, String realname, String phone, UserSex sex) {
 		super();
 		this.id = id;
-		this.loginname = loginname;
-		this.realname = realname;
+		this.loginName = loginname;
+		this.realName = realname;
 		this.phone = phone;
 		this.sex = sex;
 	}
@@ -24,16 +24,16 @@ public class UserDto {
 		this.id = id;
 	}
 	public String getLoginname() {
-		return loginname;
+		return loginName;
 	}
 	public void setLoginname(String loginname) {
-		this.loginname = loginname;
+		this.loginName = loginname;
 	}
 	public String getRealname() {
-		return realname;
+		return realName;
 	}
 	public void setRealname(String realname) {
-		this.realname = realname;
+		this.realName = realname;
 	}
 	public String getPhone() {
 		return phone;

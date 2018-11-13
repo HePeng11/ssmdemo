@@ -4,11 +4,9 @@ import com.jxcdemo.enums.UserSex;
 
 public class User {
 	private int id;
-	private int userid;
-	private int userpassword;
-	private String loginname;
+	private String loginName;
 	private String password;
-	private String realname;
+	private String realName;
 	private String phone;
 	private UserSex sex;
 	public int getId() {
@@ -17,11 +15,11 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getLoginname() {
-		return loginname;
+	public String getLoginName() {
+		return loginName;
 	}
-	public void setLoginname(String loginname) {
-		this.loginname = loginname;
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
 	}
 	public String getPassword() {
 		return password;
@@ -29,11 +27,11 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getRealname() {
-		return realname;
+	public String getRealName() {
+		return realName;
 	}
-	public void setRealname(String realname) {
-		this.realname = realname;
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 	public String getPhone() {
 		return phone;
@@ -47,5 +45,6 @@ public class User {
 	public void setSex(UserSex sex) {
 		this.sex = sex;
 	}
+	
 	
 }
