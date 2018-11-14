@@ -11,19 +11,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.jxc.dto.UserDto;
 import com.jxcdemo.business.IUserBusiness;
 import com.jxcdemo.common.ActionCode;
 import com.jxcdemo.common.ActionResult;
 import com.jxcdemo.common.QueryResult;
+import com.jxcdemo.common.StringUtil;
 import com.jxcdemo.dao.UserDao;
+import com.jxcdemo.dto.UserDto;
 import com.jxcdemo.entitys.User;
 import com.jxcdemo.enums.UserSex;
 
 @Service
 public class UserBusiness implements IUserBusiness {
 	@Autowired
-	UserDao mDao;
+	UserDao userDao;
 
 	/**
 	 * 登陆
@@ -45,7 +46,7 @@ public class UserBusiness implements IUserBusiness {
 			return null;
 		}
 		try {
-			User user = mDao.login(name, passsword);
+			User user = userDao.login(name, passsword);
 			return user;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -61,7 +62,7 @@ public class UserBusiness implements IUserBusiness {
 	public QueryResult<UserDto> getusers(int page, int limit) {
 		PageHelper.startPage(page, limit, true);
 
-		List<User> list = mDao.getusers(new UserDto(0, "", "", "", UserSex.未知));// 测试传参
+		List<User> list = userDao.getusers(new UserDto(0, "", "", "", UserSex.未知));// 测试传参
 		PageInfo<User> info = new PageInfo<>(list);
 
 		List<UserDto> result = new ArrayList<UserDto>();
@@ -82,9 +83,93 @@ public class UserBusiness implements IUserBusiness {
 	 */
 	@Override
 	public ActionResult addUser(User user) {
-		Integer i = mDao.adduser(user);
-		ActionResult r = new ActionResult(ActionCode.Success, "添加成功", i);
+		user.setId(0);
+		ActionResult r = ValidateModel(user);
+		if (r.getCode() == ActionCode.Failed) {
+			return r;
+		}
 
+		Integer i = userDao.adduser(user);
+		if (i > 0) {
+			r.setCode(ActionCode.Success);
+			r.setMsg("添加用户成功！");
+		} else {
+			r.setMsg("写入数据库失败！");
+		}
+
+		return r;
+	}
+
+	/**
+	 * 修改
+	 */
+	@Override
+	public ActionResult updateUser(User user) {
+		ActionResult r = new ActionResult();
+		if (user.getId() <= 0) {
+			r.setMsg("更新的用户数据无效！");
+			return r;
+		}
+		r = ValidateModel(user);
+		if (r.getCode() == ActionCode.Failed) {
+			return r;
+		}
+		Integer i = userDao.updateUser(user);
+		if (i > 0) {
+			r.setCode(ActionCode.Success);
+			r.setMsg("更新用户成功！");
+		} else {
+			r.setMsg("更新数据库失败！");
+		}
+		return r;
+	}
+
+	/**
+	 * 删除
+	 */
+	@Override
+	public ActionResult deleteUser(int id) {
+		ActionResult r = new ActionResult();
+		if (id <= 0) {
+			r.setMsg("删除的用户数据无效！");
+			return r;
+		}
+		Integer i = userDao.deleteUser(id);
+		if (i > 0) {
+			r.setCode(ActionCode.Success);
+			r.setMsg("删除用户成功！");
+		} else {
+			r.setMsg("更新数据库失败！");
+		}
+		return r;
+	}
+
+	/**
+	 * 验证数据
+	 * 
+	 * @param user
+	 * @return
+	 */
+	private ActionResult ValidateModel(User user) {
+		ActionResult r = new ActionResult();
+		if (StringUtil.isBlank(user.getLoginName())) {
+			r.setMsg("请输入用户名！");
+			return r;
+		}
+		if (StringUtil.isSpecialChar(user.getLoginName())) {
+			r.setMsg("用户名包括特殊字符！");
+			return r;
+		}
+		if (StringUtil.isBlank(user.getPassword())) {
+			r.setMsg("请输入密码！");
+			return r;
+		}
+		Integer e = userDao.existUser(user.getLoginName(), user.getId());
+		if (e != null && e > 0) {
+			r.setMsg("该用户名已经存在！");
+			return r;
+		}
+		r.setCode(ActionCode.Success);
 		return r;
 	}
 

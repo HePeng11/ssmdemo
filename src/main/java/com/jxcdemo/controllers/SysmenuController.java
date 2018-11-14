@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jxc.dto.SysmenuDto;
 import com.jxcdemo.business.ISysmenuBusiness;
+import com.jxcdemo.dto.SysmenuDto;
 
 @Controller
 @RequestMapping("sysmenu")

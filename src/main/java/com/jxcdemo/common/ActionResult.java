@@ -1,6 +1,5 @@
 package com.jxcdemo.common;
 
-
 /**
  * 2xx (成功类别) 200 Ok：标准的 HTTP 响应，表示 GET、PUT 或 POST 的处理成功。 201
  * Created：在创建新实例时，应返回此状态代码。例如，使用 POST 方法创建一个新的实例，应该始终返回 201 状态码。 204
@@ -27,7 +26,8 @@ public class ActionResult {
 	private Object data;
 
 	public ActionResult() {
-		this.code = ActionCode.Success;
+		this.code = ActionCode.Failed;
+		msg = "操作失败";
 	}
 
 	public ActionResult(ActionCode code) {
@@ -38,10 +38,11 @@ public class ActionResult {
 		this.code = code;
 		this.msg = msg;
 	}
-	public ActionResult(ActionCode code, String msg,Object data) {
+
+	public ActionResult(ActionCode code, String msg, Object data) {
 		this.code = code;
 		this.msg = msg;
-		this.data=data;
+		this.data = data;
 	}
 
 	public ActionCode getCode() {
@@ -50,6 +51,9 @@ public class ActionResult {
 
 	public void setCode(ActionCode code) {
 		this.code = code;
+		if (code == ActionCode.Success && msg == null) {
+			msg = "操作成功！";
+		}
 	}
 
 	public String getMsg() {

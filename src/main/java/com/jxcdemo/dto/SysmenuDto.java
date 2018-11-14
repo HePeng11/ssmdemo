@@ -1,4 +1,4 @@
-package com.jxc.dto;
+package com.jxcdemo.dto;
 
 import java.util.List;
 

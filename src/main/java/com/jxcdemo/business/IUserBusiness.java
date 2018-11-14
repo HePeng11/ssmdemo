@@ -3,9 +3,9 @@ package com.jxcdemo.business;
 
 import org.springframework.stereotype.Service;
 
-import com.jxc.dto.UserDto;
 import com.jxcdemo.common.ActionResult;
 import com.jxcdemo.common.QueryResult;
+import com.jxcdemo.dto.UserDto;
 import com.jxcdemo.entitys.User;
 
 @Service
@@ -32,4 +32,19 @@ public interface IUserBusiness {
 	 * @return
 	 */
 	ActionResult addUser(User user);
+	
+	/**
+	 * 更新
+	 * @param user
+	 * @return
+	 */
+	ActionResult updateUser(User user);
+	
+	/**
+	 * 删除
+	 * @param user
+	 * @return
+	 */
+	ActionResult deleteUser(int id);
+	
 }
