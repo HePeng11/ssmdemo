@@ -12,7 +12,7 @@
 	<sql id="Base_Column_List">
 		id,loginName,realName,phone,sex
 	</sql>
-	
+
 	<select id="login" resultType="com.jxcdemo.entitys.User"
 		resultMap="userMap" parameterType="string">
 		select
@@ -20,7 +20,7 @@
 		from Users
 		where loginName = #{name} and `password`=#{password} limit 1
 	</select>
-	
+
 	<select id="getusers" resultType="com.jxcdemo.entitys.User">
 		select
 		<include refid="Base_Column_List" />
@@ -28,12 +28,16 @@
 		where loginName like '%${loginName}%'
 	</select>
 	<insert id="adduser">
-		insert into users (loginName,passWord,realName,phone,sex)
+		insert into users
+		(loginName,passWord,realName,phone,sex)
 		VALUES(#{loginName},#{password},#{realName},#{phone},#{sex})
 	</insert>
 	<update id="updateUser">
 		UPDATE users set
-		loginName=#{loginName},`password`=#{password},
+		loginName=#{loginName},
+		<if test="password != null and password!=''">
+			`password`=#{password},
+		</if>
 		realName=#{realName},phone=#{phone},sex=#{sex}
 		where id = #{id}
 	</update>
@@ -42,6 +46,7 @@
 	</delete>
 	<select id="existUser" resultType="java.lang.Integer">
 		select 1 from users
-		where loginName = #{loginName} and id != #{id} limit 1
+		where
+		loginName = #{loginName} and id != #{id} limit 1
 	</select>
 </mapper>

@@ -9,9 +9,15 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.jxcdemo.business.IUserBusiness;
+import com.jxcdemo.entitys.User;
 
 /**
  * @Description:filter的三种典型应用： 1、可以在filter中根据条件决定是否调用chain.doFilter(request,
@@ -22,7 +28,8 @@ import javax.servlet.http.HttpSession;
  * @date:
  */
 public class SysFilter implements Filter {
-
+	@Autowired
+	IUserBusiness iUserBusiness;
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		System.out.println("----过滤器初始化----");
@@ -39,18 +46,27 @@ public class SysFilter implements Filter {
 		System.out.println("SysFilter：url--》" + request.getRequestURI());
 		String targetURL = request.getServletPath();
 		String[] noAuthMaps = new String[] { "/views/login.jsp", "/login" };
-		if (Arrays.asList(noAuthMaps).contains(targetURL)||targetURL.endsWith(".jpg")) {
+		if (Arrays.asList(noAuthMaps).contains(targetURL) || targetURL.endsWith(".jpg")) {
 			System.out.println("SysFilter：url--》允许请求" + request.getRequestURI());
 			chain.doFilter(irequest, iresponse);
 			return;
 		} else {
 			HttpSession session = request.getSession();
 			Object user = session.getAttribute("user");
+			if(user==null) {
+				//如果存在cookie则转发请求到login或index
+//				Cookie cookie1 = Utils.getCookieByName(request, "loginName");
+//				Cookie cookie2 = Utils.getCookieByName(request, "password");
+//				HttpServletResponse response = (HttpServletResponse) iresponse;
+//				response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+			}
 			if (user != null) {
 				System.out.println("SysFilter：url--》允许请求" + request.getRequestURI());
 				chain.doFilter(irequest, iresponse);
 				return;
-			} else {
+			}
+			else
+			{
 				HttpServletResponse response = (HttpServletResponse) iresponse;
 				System.out.println("SysFilter：url--》拒绝请求" + request.getRequestURI());
 				response.sendRedirect(request.getContextPath() + "/views/login.jsp");
@@ -64,4 +80,5 @@ public class SysFilter implements Filter {
 	public void destroy() {
 		System.out.println("----过滤器销毁----");
 	}
+
 }

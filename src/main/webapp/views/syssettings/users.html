@@ -43,7 +43,7 @@ body {
 			<div class="layui-form-item">
 				<label class="layui-form-label">密码</label>
 				<div class="layui-input-block">
-					<input type="password" name="password" required
+					<input type="password" id="passwordinput" name="password" required
 						lay-verify="required|pass" placeholder="请输入密码"
 						class="layui-input width80">
 				</div>
@@ -70,7 +70,7 @@ body {
 				</div>
 			</div>
 			<div class="layui-form-item" style="display: none">
-				<input type="hidden" name="action">
+				<input type="hidden" id="actioninput" name="action">
 				<input type="hidden" name="id">
 			</div>
 			<div class="layui-form-item">
@@ -84,19 +84,11 @@ body {
 
 
 
-
-
-
-
-
 	<script type="text/html" id="toolbarDemo">
   <div class="layui-btn-container">
     <button class="layui-btn layui-btn-sm layui-bg-cyan" lay-event="add"><i class="layui-icon layui-icon-add-1"></i>新增</button>
-    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
   </div>
-</script>
+	</script>
 
 	<script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -126,8 +118,6 @@ body {
 				cols : [ [ {
 					type : 'numbers'
 				}, {
-					type : 'checkbox'
-				}, {
 					field : 'id',
 					title : 'ID',
 					hide : true,
@@ -156,7 +146,8 @@ body {
 					title : '性别'
 				}, , {
 					title : "操作",
-					align : 'left',
+					width:200,
+					 align: 'left',
 					toolbar : '#barDemo'
 				} ] ],
 				page : true
@@ -168,17 +159,6 @@ body {
 				switch (obj.event) {
 				case 'add':
 					showstopflowdiv(1);
-					break;
-				case 'getCheckData':
-					var data = checkStatus.data;
-					layer.alert(JSON.stringify(data));
-					break;
-				case 'getCheckLength':
-					var data = checkStatus.data;
-					layer.msg('选中了：' + data.length + '个');
-					break;
-				case 'isAll':
-					layer.msg(checkStatus.isAll ? '全选' : '未全选');
 					break;
 				}
 				;
@@ -211,7 +191,6 @@ body {
 
 			//添加/编辑用户对话框
 			function showstopflowdiv(action,rowdata) {
-
 				userformindex = layer.open({
 					type : 1,
 					title :action==1? "<i class='layui-icon layui-icon-add-1'></i>新增用户":"<i class='layui-icon layui-icon-edit'></i>编辑用户",
@@ -224,15 +203,22 @@ body {
 					rowdata.realName=rowdata.realname;
 					rowdata.action=2;
 					form.val("adduserform",rowdata);
+					$("#passwordinput").attr("lay-verify","pass1");
 				}else{
-					form.val("adduserform",{action:1});
+					if($("#actioninput").val()=="2"){
+						document.getElementById("adduserform").reset();
+						form.render();
+						form.val("adduserform",{action:1});
+					}
+					
+					$("#passwordinput").attr("lay-verify","required|pass");
 				}
 			}
 
 			//监听提交
 			form.on('submit(submitbtn)', function(data) {
 				$.ajax({
-					type : data.action==1?"POST":"put",
+					type : data.field.action==1?"POST":"put",
 					url : "../../../users",
 					data : data.field,
 					dataType : "json",
@@ -281,6 +267,12 @@ body {
 				//数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
 				,
 				pass : [ /^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格' ]
+				,
+				pass1 : function(v,i){
+					if(v!=null&&v!=""&&!/^[\S]{6,12}$/.test(v)){
+						return "密码必须6到12位，且不能出现空格";
+					}
+				}
 			});
 
 		});

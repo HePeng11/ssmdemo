@@ -1,5 +1,8 @@
 package com.jxcdemo.controllers;
 
+import java.net.URLEncoder;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jxcdemo.business.IUserBusiness;
 import com.jxcdemo.common.ActionResult;
 import com.jxcdemo.common.QueryResult;
+import com.jxcdemo.common.Utils;
 import com.jxcdemo.dto.UserDto;
 import com.jxcdemo.entitys.User;
 
@@ -28,6 +32,7 @@ public class UserController {
 
 	/**
 	 * 分页查询
+	 * 
 	 * @param page
 	 * @param limit
 	 * @return
@@ -40,10 +45,9 @@ public class UserController {
 	}
 
 	/**
-	 * 添加
-	 * 【GET】 /users # 查询用户信息列表 【GET】 /users/1001 # 查看某个用户信息 【POST】 /users # 新建用户信息
-	 * 【PUT】 /users/1001 # 更新用户信息(全部字段) 【PATCH】 /users/1001 # 更新用户信息(部分字段) 【DELETE】
-	 * /users/1001 # 删除用户信息
+	 * 添加 【GET】 /users # 查询用户信息列表 【GET】 /users/1001 # 查看某个用户信息 【POST】 /users #
+	 * 新建用户信息 【PUT】 /users/1001 # 更新用户信息(全部字段) 【PATCH】 /users/1001 # 更新用户信息(部分字段)
+	 * 【DELETE】 /users/1001 # 删除用户信息
 	 * 
 	 * @return
 	 */
@@ -53,41 +57,45 @@ public class UserController {
 
 		return iUserBusiness.addUser(user);
 	}
-	
+
 	/**
 	 * 修改
+	 * 
 	 * @param user
 	 * @return
 	 */
 	@PutMapping(value = "/users")
 	@ResponseBody
 	public ActionResult updateUser(User user) {
-		
+
 		return iUserBusiness.updateUser(user);
 	}
-	
+
 	/**
 	 * 删除
+	 * 
 	 * @param user
 	 * @return
 	 */
-	@DeleteMapping(value="/users/{id}")
+	@DeleteMapping(value = "/users/{id}")
 	@ResponseBody
-	public ActionResult deleteUser(@PathVariable("id")int id) {
-		
+	public ActionResult deleteUser(@PathVariable("id") int id) {
+
 		return iUserBusiness.deleteUser(id);
 	}
 
 	/**
 	 * 登陆
+	 * 
 	 * @param name
 	 * @param password
 	 * @param request
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/login")
-	public String login(String name, String password, HttpServletRequest request, HttpServletResponse response) {
+	@PostMapping(value = "/login")
+	public String login(String name, String password, Boolean remember, HttpServletRequest request,
+			HttpServletResponse response) {
 		try {
 			User user = iUserBusiness.login(name, password);
 			if (user == null) {
@@ -97,6 +105,16 @@ public class UserController {
 				System.out.println("登陆成功");
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
+				if (remember != null && remember) {
+					Cookie cookie1 = new Cookie("loginName", name);
+					cookie1.setMaxAge(30 * 24 * 60 * 60);
+					response.addCookie(cookie1);
+					Cookie cookie2 = new Cookie("password", Utils.getMD5String(password));
+					cookie2.setMaxAge(30 * 24 * 60 * 60);
+					cookie2.setHttpOnly(true);
+					response.addCookie(cookie2);
+				}
+
 				return "redirect:/views/index.html";
 			}
 		} catch (Exception e) {
