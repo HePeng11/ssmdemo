@@ -1,15 +1,11 @@
 package com.jxcdemo.businessimpl;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jxcdemo.business.IUserBusiness;
@@ -33,10 +29,12 @@ public class UserBusiness implements IUserBusiness {
 	 * 登陆
 	 */
 	@Transactional("transactionManager")
-	public User login(String name, String passsword) {
-		String md5passsword = Utils.getMD5String(passsword);
-		if (md5passsword != null) {
-			passsword = md5passsword;
+	public User login(String name, String passsword, Boolean HasMD5) {
+		if (!HasMD5) {
+			String md5passsword = Utils.getMD5String(passsword);
+			if (md5passsword != null) {
+				passsword = md5passsword;
+			}
 		}
 		if (name == null || name.isEmpty()) {
 			System.out.println("用戶名不能為空");

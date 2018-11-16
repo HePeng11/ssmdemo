@@ -36,8 +36,8 @@
     <script src="../plugins/ie9/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="hold-transition skin-blue sidebar-mini fixed">
-<div class="wrapper">
+<body class="hold-transition skin-blue sidebar-mini fixed" onpageshow="myFunction(event)">
+<div class="wrapper" >
 
     <header class="main-header">
         <!-- Logo -->
@@ -609,6 +609,10 @@
 <script src="../resources/js/sidebarMenu.js"></script>-->
 
 <script type="text/javascript">
+function myFunction(event) {
+	//alert("页面是否从浏览器缓存中加载? " + event.persisted);
+
+	}
     /**
      * 本地搜索菜单
      */

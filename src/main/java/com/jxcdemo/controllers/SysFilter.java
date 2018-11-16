@@ -1,4 +1,4 @@
-package com.jxcdemo.common;
+package com.jxcdemo.controllers;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -15,9 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.jxcdemo.business.IUserBusiness;
-import com.jxcdemo.entitys.User;
+import com.jxcdemo.common.Utils;
 
 /**
  * @Description:filter的三种典型应用： 1、可以在filter中根据条件决定是否调用chain.doFilter(request,
@@ -27,9 +28,11 @@ import com.jxcdemo.entitys.User;
  * @author:
  * @date:
  */
+@Component
 public class SysFilter implements Filter {
 	@Autowired
-	IUserBusiness iUserBusiness;
+	IUserBusiness userBll;
+
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		System.out.println("----过滤器初始化----");
@@ -46,27 +49,32 @@ public class SysFilter implements Filter {
 		System.out.println("SysFilter：url--》" + request.getRequestURI());
 		String targetURL = request.getServletPath();
 		String[] noAuthMaps = new String[] { "/views/login.jsp", "/login" };
-		if (Arrays.asList(noAuthMaps).contains(targetURL) || targetURL.endsWith(".jpg")) {
+		
+		if (Arrays.asList(noAuthMaps).contains(targetURL) || targetURL.endsWith(".jpg") || targetURL.endsWith(".js")
+				|| targetURL.endsWith(".css") || targetURL.endsWith(".map") || targetURL.endsWith(".ttf")
+				|| targetURL.endsWith(".woff") || targetURL.endsWith(".woff2")) {
 			System.out.println("SysFilter：url--》允许请求" + request.getRequestURI());
 			chain.doFilter(irequest, iresponse);
 			return;
 		} else {
 			HttpSession session = request.getSession();
 			Object user = session.getAttribute("user");
-			if(user==null) {
-				//如果存在cookie则转发请求到login或index
-//				Cookie cookie1 = Utils.getCookieByName(request, "loginName");
-//				Cookie cookie2 = Utils.getCookieByName(request, "password");
-//				HttpServletResponse response = (HttpServletResponse) iresponse;
-//				response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+			if (user == null) {
+				Cookie cookie1 = Utils.getCookieByName(request, "loginName");
+				Cookie cookie2 = Utils.getCookieByName(request, "password");
+				if (cookie1 != null && cookie2 != null) {
+					user = userBll.login(cookie1.getValue(), cookie2.getValue(), true);
+				}
 			}
 			if (user != null) {
 				System.out.println("SysFilter：url--》允许请求" + request.getRequestURI());
+//				if(targetURL.endsWith("index.html")) {
+//					HttpServletResponse response = (HttpServletResponse) iresponse;
+//					response.addHeader("cache-control", "no-cache");
+//				}
 				chain.doFilter(irequest, iresponse);
 				return;
-			}
-			else
-			{
+			} else {
 				HttpServletResponse response = (HttpServletResponse) iresponse;
 				System.out.println("SysFilter：url--》拒绝请求" + request.getRequestURI());
 				response.sendRedirect(request.getContextPath() + "/views/login.jsp");

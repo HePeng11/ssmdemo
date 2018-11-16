@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simu.sewer.info.mapper.OperDataMapper" >
+  <resultMap id="BaseResultMap" type="com.simu.sewer.info.entity.OperDataEntity" >
+    <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="InfoId" property="infoid" jdbcType="CHAR" />
+    <result column="OperationData" property="operationdata" jdbcType="NVARCHAR" />
+    <result column="CreateUser" property="createuser" jdbcType="NVARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    Id, InfoId, OperationData, CreateUser, CreateTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tab_sewer_oper_data
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tab_sewer_oper_data
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.simu.sewer.info.entity.OperDataEntity" >
+    set IDENTITY_INSERT tab_sewer_base_info on;
+    insert into tab_sewer_oper_data (Id, InfoId, OperationData, 
+      CreateUser, CreateTime)
+    values (#{id,jdbcType=BIGINT}, #{infoid,jdbcType=CHAR}, #{operationdata,jdbcType=NVARCHAR}, 
+      #{createuser,jdbcType=NVARCHAR}, #{createtime,jdbcType=TIMESTAMP});
+    set IDENTITY_INSERT tab_sewer_base_info off;
+  </insert>
+  <insert id="insertSelective" parameterType="com.simu.sewer.info.entity.OperDataEntity" >
+    set IDENTITY_INSERT tab_sewer_base_info on;
+    insert into tab_sewer_oper_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="infoid != null" >
+        InfoId,
+      </if>
+      <if test="operationdata != null" >
+        OperationData,
+      </if>
+      <if test="createuser != null" >
+        CreateUser,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="infoid != null" >
+        #{infoid,jdbcType=CHAR},
+      </if>
+      <if test="operationdata != null" >
+        #{operationdata,jdbcType=NVARCHAR},
+      </if>
+      <if test="createuser != null" >
+        #{createuser,jdbcType=NVARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    ;set IDENTITY_INSERT tab_sewer_base_info off;
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simu.sewer.info.entity.OperDataEntity" >
+    update tab_sewer_oper_data
+    <set >
+      <if test="infoid != null" >
+        InfoId = #{infoid,jdbcType=CHAR},
+      </if>
+      <if test="operationdata != null" >
+        OperationData = #{operationdata,jdbcType=NVARCHAR},
+      </if>
+      <if test="createuser != null" >
+        CreateUser = #{createuser,jdbcType=NVARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simu.sewer.info.entity.OperDataEntity" >
+    update tab_sewer_oper_data
+    set InfoId = #{infoid,jdbcType=CHAR},
+      OperationData = #{operationdata,jdbcType=NVARCHAR},
+      CreateUser = #{createuser,jdbcType=NVARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

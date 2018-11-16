@@ -71,7 +71,7 @@ body {
 			</div>
 			<div class="layui-form-item" style="display: none">
 				<input type="hidden" id="actioninput" name="action">
-				<input type="hidden" name="id">
+				<input type="hidden" name="id" value="0">
 			</div>
 			<div class="layui-form-item">
 				<div class="layui-input-block">
@@ -208,9 +208,8 @@ body {
 					if($("#actioninput").val()=="2"){
 						document.getElementById("adduserform").reset();
 						form.render();
-						form.val("adduserform",{action:1});
 					}
-					
+					form.val("adduserform",{action:1});
 					$("#passwordinput").attr("lay-verify","required|pass");
 				}
 			}

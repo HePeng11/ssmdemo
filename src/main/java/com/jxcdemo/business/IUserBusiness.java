@@ -17,7 +17,7 @@ public interface IUserBusiness {
 	 * @param passsword
 	 * @return
 	 */
-	User login(String name, String passsword);
+	User login(String name, String passsword,Boolean HasMd5);
 	/**
 	 * 分页查询
 	 * @param page 第几页

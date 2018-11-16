@@ -1,6 +1,8 @@
 package com.jxcdemo.controllers;
 
-import java.net.URLEncoder;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jxcdemo.business.IUserBusiness;
@@ -42,6 +42,23 @@ public class UserController {
 	public QueryResult<UserDto> getUsers(int page, int limit) {
 
 		return iUserBusiness.getusers(page, limit);
+	}
+
+	
+	@GetMapping(value = "/views/index.html")
+	public String Index(HttpServletRequest request, HttpServletResponse response) {
+		response.addHeader("cache-control", "no-cache");
+		return "index1";
+		
+//		try {
+//			String s = Utils.readToString(request.getSession().getServletContext().getRealPath("/") 
+//					+ "/views/index.html");
+//			response.getWriter().print(s);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+
 	}
 
 	/**
@@ -95,9 +112,9 @@ public class UserController {
 	 */
 	@PostMapping(value = "/login")
 	public String login(String name, String password, Boolean remember, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response, PrintWriter out) {
 		try {
-			User user = iUserBusiness.login(name, password);
+			User user = iUserBusiness.login(name, password, false);
 			if (user == null) {
 				System.out.println("登陆失败");
 				return "redirect:/views/login.jsp";
